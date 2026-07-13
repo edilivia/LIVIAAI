@@ -1,94 +1,110 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Código para alternar as abas do Menu Lateral
-    const menuItems = document.querySelectorAll('.sidebar li');
-    const sections = document.querySelectorAll('.main-content section');
+// ==========================================
+// 1. CONTROLE DE NAVEGAÇÃO E MENU (ABAS)
+// ==========================================
+function switchTab(tabId) {
+    // Esconde todas as abas
+    const tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => tab.classList.remove('active-tab'));
 
-    menuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            menuItems.forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
+    // Remove a classe ativa de todos os botões do menu
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => item.classList.remove('active'));
 
-            const targetSection = this.getAttribute('data-target');
-            sections.forEach(section => {
-                if (section.id === targetSection) {
-                    section.classList.remove('hidden');
-                } else {
-                    section.classList.add('hidden');
-                }
-            });
-        });
-    });
-
-    // LÓGICA DO GERADOR DE COPYS TIKTOK COMPLETAS
-    const btnGerarCopy = document.querySelector('#copys-tiktok button');
-    
-    if (btnGerarCopy) {
-        btnGerarCopy.addEventListener('click', function() {
-            const produto = document.querySelector('input[placeholder="Ex: Removedor de Cravos Ultrassônico"]').value.trim();
-            const beneficio = document.querySelector('input[placeholder="Ex: Pele limpa em 5 minutos"]').value.trim();
-
-            if (!produto || !beneficio) {
-                alert("Por favor, preencha o nome do produto e o benefício principal!");
-                return;
-            }
-
-            // Seleciona a área onde o resultado vai aparecer
-            let resultadoContainer = document.querySelector('.copy-results-container');
-            
-            // Se o container de resultados não existir, cria ele abaixo do botão
-            if (!resultadoContainer) {
-                resultadoContainer = document.createElement('div');
-                resultadoContainer.className = 'copy-results-container';
-                document.querySelector('#copys-tiktok .form-container').appendChild(resultadoContainer);
-            }
-
-            // Estruturas de roteiros completos (Começo, Meio e Fim)
-            const roteiro1 = `
-<strong>🔥 Opção 1: Formato UGC Emocional (O Segredo Revelado)</strong>
-<br><br>
-<strong>[0 a 3 seg - O GANCHO]:</strong> Espera aí! Não passa esse vídeo se você sofre tentando ${beneficio.toLowerCase()}. Eu passei meses gastando dinheiro à toa até descobrir isso aqui... 😳
-<br><br>
-<strong>[3 a 15 seg - O PROBLEMA]:</strong> Olhando assim, ninguém imagina o sufoco que era. Eu já tinha testado de tudo, mas parece que nada funcionava de verdade. Minha autoestima ia lá para baixo.
-<br><br>
-<strong>[15 a 35 seg - A SOLUÇÃO]:</strong> Foi aí que eu conheci o(a) <strong>${produto}</strong>. Gente, sério, mudou o meu jogo! Ele foi feito exatamente para ajudar a ${beneficio.toLowerCase()} sem complicações. Olha a facilidade de usar isso no dia a dia! (Mostra o produto na tela).
-<br><br>
-<strong>[35 a 45 seg - CTA / Chamada de Ação]:</strong> O melhor de tudo é que eles estão com frete grátis e desconto essa semana. Clica no link do meu perfil ou no botão 'Saiba Mais' antes que acabe o estoque! 🛒✨
-            `;
-
-            const roteiro2 = `
-<strong>💡 Opção 2: Formato Direto e Curioso (Se você faz isso, pare agora!)</strong>
-<br><br>
-<strong>[0 a 3 seg - O GANCHO]:</strong> Se você ainda tenta ${beneficio.toLowerCase()} do jeito antigo, você está perdendo tempo e dinheiro! Para tudo o que você tá fazendo e olha isso. 🛑
-<br><br>
-<strong>[3 a 15 seg - O CONTEXTO]:</strong> A maioria das pessoas comete o erro de achar que precisa de tratamentos caros ou horas de esforço para conseguir resolver isso. Mas a tecnologia evoluiu.
-<br><br>
-<strong>[15 a 35 seg - O PRODUTO]:</strong> Esse(a) <strong>${produto}</strong> viralizou na gringa justamente porque resolve o problema direto na fonte. Ele serve para ${beneficio.toLowerCase()} de forma 100% prática, segura e rápida. É literalmente ligar e usar.
-<br><br>
-<strong>[35 a 45 seg - CTA / Chamada de Ação]:</strong> Se você quer facilitar sua vida e ter esse resultado hoje mesmo, clica no botão aqui embaixo. O link promocional está ativo por tempo limitado! 🚀
-            `;
-
-            const roteiro3 = `
-<strong>🚨 Opção 3: Formato Antagonista (O que não te contam)</strong>
-<br><br>
-<strong>[0 a 3 seg - O GANCHO]:</strong> Eles vão me odiar por revelar isso, mas esse é o maior segredo que nunca te contaram sobre como ${beneficio.toLowerCase()} sem esforço... 🤫
-<br><br>
-<strong>[3 a 15 seg - A JORNADA]:</strong> Sabe quando você vê aquelas pessoas na internet com o resultado perfeito e acha que elas gastaram uma fortuna? Mentira. Elas só usam a ferramenta certa.
-<br><br>
-<strong>[15 a 35 seg - A DEMONSTRAÇÃO]:</strong> O segredo é esse(a) pequeno(a) <strong>${produto}</strong>. Ele foi desenhado especificamente para quem quer ${beneficio.toLowerCase()} em casa, economizando tempo e dinheiro. É o verdadeiro custo-benefício que ninguém te mostra.
-<br><br>
-<strong>[35 a 45 seg - CTA / Chamada de Ação]:</strong> Pare de gastar com o que não funciona. Garanta o seu <strong>${produto}</strong> direto no site oficial clicando em 'Saiba Mais' com garantia exclusiva! 💎
-            `;
-
-            // Injeta os 3 roteiros na tela com um visual bonito
-            resultadoContainer.innerHTML = `
-                <div class="result-card" style="background: #1e1e1e; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #10b981; color: #fff; font-size: 14px; line-height: 1.6;">
-                    ${roteiro1}
-                    <hr style="border: 0; border-top: 1px dashed #333; margin: 20px 0;">
-                    ${roteiro2}
-                    <hr style="border: 0; border-top: 1px dashed #333; margin: 20px 0;">
-                    ${roteiro3}
-                </div>
-            `;
-        });
+    // Ativa a aba clicada
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.add('active-tab');
     }
-});
+
+    // Ativa o botão correspondente no menu
+    const activeBtn = document.querySelector(`[onclick="switchTab('${tabId}')"]`);
+    if (activeBtn) {
+        activeBtn.classList.add('active');
+    }
+
+    // Fecha a barra lateral no celular após o clique automaticamente
+    const sidebar = document.getElementById('app-sidebar');
+    if (sidebar) {
+        sidebar.classList.remove('open');
+    }
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById('app-sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('open');
+    }
+}
+
+// ==========================================
+// 2. GERADOR DE ROTEIROS COMPLETOS (COPYS TIKTOK)
+// ==========================================
+function runCopywriter() {
+    const produto = document.getElementById('copy-name').value.trim();
+    const beneficio = document.getElementById('copy-benefit').value.trim();
+    const containerResultados = document.getElementById('copy-results');
+
+    if (!produto || !beneficio) {
+        alert("Por favor, digite o nome do produto e o benefício principal!");
+        return;
+    }
+
+    // Modelos de roteiros completos com começo, meio e fim
+    const roteiro1 = `
+        <div style="background: #1e1e1e; padding: 15px; border-radius: 8px; border: 1px solid #10b981; margin-bottom: 15px; color: #fff;">
+            <span style="color: #10b981; font-weight: bold; display: block; margin-bottom: 8px;">🔥 OPÇÃO 1: Formato UGC Emocional (O Segredo)</span>
+            <strong>[0-3s - Gancho]:</strong> Espera aí! Não passa esse vídeo se você sofre tentando ${beneficio.toLowerCase()}. Eu passei meses gastando dinheiro à toa até descobrir isso aqui... 😳<br><br>
+            <strong>[3-15s - Problema]:</strong> Olhando assim, ninguém imagina o sufoco que era. Eu já tinha testado de tudo, mas parece que nada funcionava de verdade. Minha autoestima ia lá para baixo.<br><br>
+            <strong>[15-35s - Solução]:</strong> Foi aí que eu conheci o(a) <strong>${produto}</strong>. Gente, sério, mudou o meu jogo! Ele ajuda a ${beneficio.toLowerCase()} sem complicação nenhuma. Olha a facilidade de usar isso no dia a dia!<br><br>
+            <strong>[35-45s - CTA]:</strong> O melhor é que está com frete grátis e desconto essa semana. Clica no botão 'Saiba Mais' antes que acabe o estoque! 🛒✨
+        </div>
+    `;
+
+    const roteiro2 = `
+        <div style="background: #1e1e1e; padding: 15px; border-radius: 8px; border: 1px solid #3b82f6; margin-bottom: 15px; color: #fff;">
+            <span style="color: #3b82f6; font-weight: bold; display: block; margin-bottom: 8px;">💡 OPÇÃO 2: Formato Direto (Pare de errar!)</span>
+            <strong>[0-3s - Gancho]:</strong> Se você ainda tenta ${beneficio.toLowerCase()} do jeito antigo, você tá perdendo tempo! Para tudo o que você tá fazendo e olha isso. 🛑<br><br>
+            <strong>[3-15s - Contexto]:</strong> A maioria das pessoas comete o erro de achar que precisa gastar uma fortuna ou passar horas para resolver isso. Mas a tecnologia evoluiu.<br><br>
+            <strong>[15-35s - Produto]:</strong> Esse(a) <strong>${produto}</strong> viralizou justamente porque resolve o problema direto na fonte. Ele serve para ${beneficio.toLowerCase()} de forma prática, segura e muito rápida.<br><br>
+            <strong>[35-45s - CTA]:</strong> Se você quer facilitar sua vida e ter esse resultado hoje mesmo, clica no link promocional aqui embaixo por tempo limitado! 🚀
+        </div>
+    `;
+
+    // Substitui o estado vazio pelos roteiros gigantes na tela
+    containerResultados.innerHTML = `
+        <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+            <p style="color: #a3a3a3; font-size: 13px; margin-bottom: 10px;">✨ Use as estruturas abaixo para colar no criador de vídeo:</p>
+            ${roteiro1}
+            ${roteiro2}
+        </div>
+    `;
+}
+
+// ==========================================
+// 3. OUTRAS FUNÇÕES DO APP (EVITAR ERROS)
+// ==========================================
+function runResearch() {
+    const nome = document.getElementById('res-name').value;
+    const container = document.getElementById('research-result');
+    container.innerHTML = `<div style="background:#1e1e1e; padding:20px; border-radius:8px; color:#fff; border: 1px solid #10b981;"><h3>📊 Relatório de Viabilidade: ${nome}</h3><p>Margem estimada está excelente para anúncios no TikTok Shop! O produto possui alto fator viral.</p></div>`;
+}
+
+function runPrompter() {
+    const produto = document.getElementById('prompt-product').value;
+    const container = document.getElementById('prompt-result');
+    container.innerHTML = `<div style="background:#1e1e1e; padding:20px; border-radius:8px; color:#fff; border: 1px solid #10b981;"><code>hyper-realistic 8k commercial video of ${produto}, cinematic lighting, tiktok trend style, shot on 35mm lens --ar 9:16</code></div>`;
+}
+
+function openConfirmModal(type) {
+    const modal = document.getElementById('confirm-modal');
+    const text = document.getElementById('modal-cost-text');
+    if (modal && text) {
+        text.innerText = type === 'image' ? '10 créditos' : '30 créditos';
+        modal.style.display = 'flex';
+    }
+}
+
+function closeConfirmModal() {
+    const modal = document.getElementById('confirm-modal');
+    if (modal) modal.style.display = 'none';
+}
