@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiviaAI Studio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- CABEÇALHO DO CELULAR -->
+        <header class="mobile-header">
+            <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="mobile-title">LiviaAI Studio</div>
+        </header>
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="logo-section">
+                <div class="logo-box">LAI</div>
+                <div>
+                    <h2>Livia <span class="green-text">AI</span></h2>
+                    <p class="subtitle">STUDIO</p>
+                </div>
+                <button class="menu-toggle-close" onclick="toggleSidebar()">&times;</button>
+            </div>
+
+            <nav class="menu-nav">
+                <span class="menu-category">Módulos</span>
+                
+                <button class="menu-item active" onclick="switchTab('tab-validation')">
+                    <i class="fa-solid fa-magnifying-glass"></i> Validação
+                </button>
+                
+                <button class="menu-item" onclick="switchTab('tab-copys')">
+                    <i class="fa-solid fa-file-lines"></i> Copys TikTok
+                </button>
+                
+                <button class="menu-item" onclick="switchTab('tab-prompter')">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Direção de Cena
+                </button>
+                
+                <button class="menu-item" onclick="switchTab('tab-models')">
+                    <i class="fa-solid fa-image"></i> Estúdio de Modelos
+                </button>
+                
+                <button class="menu-item" onclick="switchTab('tab-videos')">
+                    <i class="fa-solid fa-video"></i> Gerador de Vídeos
+                </button>
+            </nav>
+
+            <div class="credits-box">
+                <div class="credits-header">
+                    <span><i class="fa-solid fa-wallet" style="color: #34d399;"></i> Créditos</span>
+                    <span class="green-text font-bold">120 restando</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- ABA 1: VALIDAÇÃO -->
+            <section id="tab-validation" class="tab-content active-tab">
+                <div class="grid-2x1">
+                    <div>
+                        <h1 class="page-title">Validação de Produto</h1>
+                        <p class="page-description">Analise a viabilidade comercial do produto antes de gastar com anúncios.</p>
+                        
+                        <div class="card-form">
+                            <h3>Nova Ficha de Pesquisa</h3>
+                            <div class="input-group">
+                                <label>Nome do Produto</label>
+                                <input type="text" id="res-name" placeholder="Ex: Removedor de Cravos Ultrassônico">
+                            </div>
+                            <div class="input-group">
+                                <label>Nicho</label>
+                                <select id="res-niche">
+                                    <option value="Beleza & Estética">Beleza & Estética</option>
+                                    <option value="Cozinha & Lar">Cozinha & Lar</option>
+                                    <option value="Ferramentas & Utilidades">Ferramentas & Utilidades</option>
+                                    <option value="Bebês & Kids">Bebês & Kids</option>
+                                    <option value="Pets">Pets</option>
+                                </select>
+                            </div>
+                            <div class="grid-1x1" style="gap: 12px;">
+                                <div class="input-group">
+                                    <label>Custo Unitário (R$)</label>
+                                    <input type="number" id="res-cost" placeholder="15.00">
+                                </div>
+                                <div class="input-group">
+                                    <label>Preço de Venda (R$)</label>
+                                    <input type="number" id="res-price" placeholder="89.90">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label>Observações do Concorrente</label>
+                                <textarea id="res-notes" rows="3" placeholder="Vídeo viral com 2M de views..."></textarea>
+                            </div>
+                            <button class="btn-primary" onclick="runResearch()">Analisar Produto</button>
+                        </div>
+                    </div>
+                    <div id="research-result">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <p>Preencha os dados ao lado para gerar o relatório de viabilidade.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: COPYS -->
+            <section id="tab-copys" class="tab-content">
+                <h1 class="page-title">Copys TikTok</h1>
+                <p class="page-description">Gerador automático de roteiros baseados nas estruturas que mais retêm atenção.</p>
+                <div class="grid-2x1">
+                    <div class="card-form">
+                        <div class="input-group">
+                            <label>Nome do Produto</label>
+                            <input type="text" id="copy-name" placeholder="Ex: Escova Alisadora 3 em 1">
+                        </div>
+                        <div class="input-group">
+                            <label>Principal Benefício</label>
+                            <input type="text" id="copy-benefit" placeholder="Ex: alisar o cabelo em 5 minutos">
+                        </div>
+                        <button class="btn-primary" onclick="runCopywriter()">Gerar Roteiros UGC</button>
+                    </div>
+                    <div id="copy-results" class="scroll-results">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-wand-magic"></i>
+                            <p>Insira as informações para gerar copys.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 3: DIREÇÃO DE CENA -->
+            <section id="tab-prompter" class="tab-content">
+                <h1 class="page-title">Direção de Cena</h1>
+                <p class="page-description">Converta ideias em prompts de comando profissionais para IAs de vídeo.</p>
+                <div class="grid-2x1">
+                    <div class="card-form">
+                        <div class="input-group">
+                            <label>O que é o produto?</label>
+                            <input type="text" id="prompt-product" placeholder="Ex: garrafa de água inteligente">
+                        </div>
+                        <div class="input-group">
+                            <label>Estilo do Vídeo</label>
+                            <select id="prompt-style">
+                                <option value="Cinematic Commercial">Comercial Cinematográfico Premium</option>
+                                <option value="UGC TikTok Aesthetic">Estilo Casual UGC TikTok</option>
+                            </select>
+                        </div>
+                        <button class="btn-primary" onclick="runPrompter()">Traduzir Engenharia de Prompt</button>
+                    </div>
+                    <div id="prompt-result">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-code"></i>
+                            <p>Seu prompt otimizado aparecerá aqui.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 4: ESTÚDIO DE MODELOS -->
+            <section id="tab-models" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h1 class="page-title" style="margin-bottom:0;">Estúdio de Modelos AI</h1>
+                    </div>
+                    <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="openConfirmModal('image')">Criar Nova Modelo</button>
+                </div>
+                <div class="gallery-container" id="image-gallery">
+                    <div class="empty-state" style="grid-column: 1 / -1;"><i class="fa-solid fa-images"></i><p>Nenhuma foto gerada nesta sessão.</p></div>
+                </div>
+            </section>
+
+            <!-- ABA 5: GERADOR DE VÍDEOS -->
+            <section id="tab-videos" class="tab-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h1 class="page-title" style="margin-bottom:0;">Gerador de Vídeos UGC</h1>
+                    </div>
+                    <button class="btn-primary" style="width: auto; padding: 10px 20px;" onclick="openConfirmModal('video')">Renderizar Vídeo 9:16</button>
+                </div>
+                <div class="gallery-container" id="video-gallery">
+                    <div class="empty-state" style="grid-column: 1 / -1;"><i class="fa-solid fa-film"></i><p>Nenhum clipe renderizado.</p></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal-card">
+            <div class="modal-title" style="color: #34d399;"><i class="fa-solid fa-credit-card"></i><h3>Confirmar Criação</h3></div>
+            <p class="modal-desc">Esta ação consumirá <strong id="modal-cost-text" style="color:#fff;">X créditos</strong>.</p>
+            <div class="modal-actions">
+                <button class="btn-modal-cancel" onclick="closeConfirmModal()">Cancelar</button>
+                <button class="btn-modal-confirm" id="modal-confirm-btn">Confirmar Desconto</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
